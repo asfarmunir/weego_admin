@@ -44,14 +44,13 @@ const PayoutByPeriod = () => {
   const [tab, setTab] = React.useState("template");
 
   return (
-    <div
-      className=" w-full rounded-3xl bg-[#F2F2F2] dark:dark:bg-slate-900
-dark:bg-slate-900 mt-6 2xl:mt-8"
-    >
+    <div className=" w-full rounded-3xl bg-primary-100 mt-6 2xl:mt-8">
       <div className=" w-full p-2.5 2xl:p-4 flex  flex-col-reverse md:flex-row gap-6 items-center justify-between">
-        <div className="flex flex-col md:flex-row w-full md:w-fit  items-center gap-4">
-          <h3 className="font-semibold pl-4">Emails</h3>
-          <div className="flex  justify-center md:justify-start     items-center gap-1.5">
+        <div className="flex flex-col md:flex-row w-full md:w-fit  items-start md:items-center gap-4">
+          <h3 className="font-semibold pl-4 border-r border-primary-50 pr-3">
+            Emails
+          </h3>
+          <div className="flex   justify-start    flex-wrap   items-center gap-1.5">
             {tabs.map((t, index) => (
               <button
                 key={index}
@@ -59,8 +58,8 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
                 className={` capitalize text-xs text-nowrap font-semibold p-2.5 2xl:p-3 px-5 
                 tracking-wide 2xl:px-7 text-center rounded-full ${
                   tab === t.tab
-                    ? "bg-black dark:bg-[#194867] text-white"
-                    : " bg-slate-50 dark:bg-slate-900  text-primary"
+                    ? "bg-[#FF990033] text-primary-50"
+                    : " bg-[#372F2F99]  text-white"
                 }`}
               >
                 {t.name}
@@ -68,13 +67,14 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
             ))}
           </div>
         </div>
-        <div className="flex items-center flex-wrap md:flex-nowrap gap-1.5">
-          <div className=" bg-white dark:bg-slate-950 inline-flex  w-full md:w-fit items-center px-2 rounded-full">
+        <div className="hidden md:flex items-center flex-wrap md:flex-nowrap gap-1.5">
+          <div className=" bg-primary-200 border border-primary-50 inline-flex  w-full md:w-fit items-center px-4 rounded-full">
             <LuSearch className="w-4 h-4 text-[#848BAC] " />
             <Input
               className=" 
                 text-[#848BAC]
                 border-none
+                bg-transparent
                 focus:outline-none
                 w-full
                 md:w-fit
@@ -86,7 +86,7 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
               placeholder={"search..."}
             />
           </div>
-          <button className="bg-white    dark:bg-slate-950 p-3 inline-flex items-center font-semibold gap-1 capitalize rounded-full text-xs ">
+          <button className="bg-primary-200 border border-primary-50 p-3 inline-flex items-center font-semibold gap-1 capitalize rounded-full text-xs ">
             export
             <Image
               src="/export.svg"
@@ -96,17 +96,14 @@ dark:bg-slate-900 mt-6 2xl:mt-8"
               className=" dark:invert"
             />
           </button>
-          <button className="bg-white dark:bg-slate-950 p-3 capitalize rounded-full text-xs font-semibold ">
-            toggle colomn
-          </button>
         </div>
       </div>
       {
         {
           template: <Template />,
           history: <History />,
-          "Custom Variables": <CustomVariables />,
-          "Email Alert": <EmailAlert />,
+          // "Custom Variables": <CustomVariables />,
+          // "Email Alert": <EmailAlert />,
         }[tab]
       }
     </div>
@@ -117,21 +114,29 @@ export default PayoutByPeriod;
 
 const Template = () => {
   return (
-    <div
-      className=" w-full rounded-3xl bg-[#F2F2F2] dark:dark:bg-slate-900
-dark:bg-slate-900 mt-6 2xl:mt-8"
-    >
-      <div className=" w-full grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2 lg:grid-cols-3  rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
+    <div className=" w-full rounded-3xl bg-primary-100 mt-6 2xl:mt-8">
+      <div className=" w-full grid grid-cols-1 md:grid-cols-2 bg-[#000214] gap-x-3 gap-y-2 lg:grid-cols-3  rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
         {details.map((detail, index) => (
           <div
             key={index}
-            className=" p-5 flex flex-col gap-1 bg-[#FBFBFB] dark:bg-slate-900 dark:border-slate-800 border border-[#CED2D6] rounded-[2rem]"
+            className=" p-5 flex flex-col gap-1 bg-primary-200 dark:border-slate-800 border border-[#CED2D6] rounded-[2rem]"
           >
             <p className=" text-sm 2xl:text-lg font-semibold">{detail.title}</p>
             <p className=" text-xs 2xl:text-sm">{detail.category}</p>
           </div>
         ))}
       </div>
+      <p className=" w-full border-primary-50 px-4 bg-primary-50/20 border text-white rounded-full py-3 inline-flex items-center gap-3">
+        <Image
+          src="/images/information.svg"
+          width={20}
+          height={20}
+          className="mb-0.5 text-xs md:text-sm 2xl:text-base"
+          alt="plus"
+        />
+        To be able to use the e-mail addresses make sure they are verified by
+        your e-mail provider.
+      </p>
     </div>
   );
 };
@@ -179,27 +184,27 @@ const details = [
 const History = () => {
   return (
     <>
-      <div className=" w-full rounded-tr-3xl rounded-tl-3xl p-4 bg-background">
+      <div className=" w-full rounded-tr-3xl bg-[#000214] rounded-tl-3xl p-4 bg-background">
         <Table className=" bg-background">
           <TableHeader className=" ">
             <TableRow className=" border-none">
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] rounded-tl-full rounded-bl-full ">
+              <TableHead className="text-sm bg-primary-200/60  rounded-tl-full rounded-bl-full ">
                 Subject
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-primary-200/60  capitalize">
                 customer
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-primary-200/60  capitalize">
                 Sender
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-primary-200/60  capitalize">
                 Recipient
               </TableHead>
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize">
+              <TableHead className="text-sm bg-primary-200/60  capitalize">
                 Opened
               </TableHead>
 
-              <TableHead className="text-sm bg-[#F4FAFF] dark:bg-[#0E293B] capitalize rounded-tr-full rounded-br-full">
+              <TableHead className="text-sm bg-primary-200/60  capitalize rounded-tr-full rounded-br-full">
                 Status Events
               </TableHead>
             </TableRow>
@@ -207,24 +212,24 @@ const History = () => {
           <TableBody>
             {Array.from({ length: 6 }).map((_, i) => (
               <TableRow key={i}>
-                <TableCell className=" text-xs  text-primary 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white bg-primary-200 rounded-tl-full rounded-bl-full 2xl:text-sm font-semibold">
                   Hard Breach Detected
                 </TableCell>
-                <TableCell className=" ">
-                  <p className=" bg-[#F2F962] dark:bg-yellow-400/60 text-primary  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
+                <TableCell className="text-white bg-primary-200  ">
+                  <p className=" bg-[#F2F962] dark:bg-yellow-700/60 text-white bg-primary-200  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold">
                     729733
                   </p>
                 </TableCell>
-                <TableCell className=" text-xs  text-primary 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white bg-primary-200 2xl:text-sm font-semibold">
                   no-reply@uwmtrading.com
                 </TableCell>
-                <TableCell className=" text-xs  text-primary 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white bg-primary-200 2xl:text-sm font-semibold">
                   no-reply@uwmtrading.com
                 </TableCell>
-                <TableCell className=" text-xs  text-primary 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white bg-primary-200 2xl:text-sm font-semibold">
                   Yes
                 </TableCell>
-                <TableCell className=" text-xs  text-primary 2xl:text-sm font-semibold">
+                <TableCell className=" text-xs  text-white bg-primary-200 2xl:text-sm font-semibold rounded-tr-full rounded-br-full">
                   11/08/2024 UTC 08:10:27 PM
                 </TableCell>
               </TableRow>

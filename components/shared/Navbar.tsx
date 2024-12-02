@@ -1,178 +1,131 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { navlinks } from "@/lib/constants";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IoChevronDownOutline, IoSettingsOutline } from "react-icons/io5";
-import { HiMoon } from "react-icons/hi2";
-import { RiSearchLine } from "react-icons/ri";
+import { GoPeople } from "react-icons/go";
+import { FaRegQuestionCircle } from "react-icons/fa";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import ToggleTheme from "./ToggleTheme";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { RxHamburgerMenu, RxCalendar } from "react-icons/rx";
 
-const dropdownItems = [
-  // {
-  //   name: "affiliates",
-  //   href: "/affiliates",
-  // },
-  {
-    name: "Customers",
-    href: "/customers",
-  },
-  {
-    name: "Verifications",
-    href: "/verifications",
-  },
-  // {
-  //   name: "user-management",
-  //   href: "/user-management",
-  // },
-  {
-    name: "support management",
-    href: "/support-management",
-  },
-  // {
-  //   name: "data analytics",
-  //   href: "/data-analytics",
-  // },
-  {
-    name: "system management",
-    href: "/system-management",
-  },
-];
+import LoginModal from "@/components/shared/LoginModal";
+import { useSession, signOut } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const pathname = usePathname();
+  const session = useSession();
+  const router = useRouter();
+
+  const signOutUser = async () => {
+    await signOut({
+      redirect: false,
+      callbackUrl: "/login",
+    });
+    toast.success("Signed out successfully");
+    router.refresh();
+    router.replace("/login");
+  };
+
   return (
-    <nav className=" w-full bg-[#081C15] dark:bg-[#0E293B] rounded-full px-3 pl-5 2xl:px-5 py-3.5 flex items-center justify-around">
-      <Link href={"/"} className="text-2xl font-semibold text-white">
-        WeeGo
+    <nav className=" w-full  rounded-full px-3 md:pl-10 2xl:pl-12 2xl:px-5 py-6 flex items-center justify-between">
+      <Link href={"/"}>
+        {/* <Image
+          src="/images/logo.svg"
+          alt="Logo"
+          width={130}
+          height={130}
+          className=" w-36 2xl:w-48  "
+        /> */}
+        <h2 className=" text-white tracking-wider text-2xl font-bold ">
+          WEE<span className=" text-primary-50">G</span>O
+        </h2>
       </Link>
-      <div className="hidden lg:flex items-center ">
-        {navlinks.map((link, index) => (
+
+      <div className=" hidden md:flex items-center gap-4">
+        {/* {navlinks.map((link, index) => (
           <Link
-            href={link.href}
             key={index}
-            className={`  capitalize py-3.5 rounded-full text-[0.65rem] lg:text-xs 2xl:text-sm
-                 tracking-wide
-            ${
-              pathname === link.href
-                ? " bg-[#70E000] dark:bg-[#70E00086] px-3.5 font-semibold"
-                : " text-slate-300 px-1.5 2xl:px-2 font-thin "
-            }  `}
+            className={`text-sm 2xl:text-base font-semibold hover:border-b-2 border-primary-50 hover:-translate-y-1 transition-all   pb-1.5 mt-1.5
+            ${pathname === link.href ? "border-b-2 px-2 border-primary-50" : ""}
+        `}
+            href={link.href}
           >
             {link.name}
           </Link>
-        ))}
-        <DropdownMenu>
-          <DropdownMenuTrigger className=" text-slate-300    justify-center text-nowrap w-full md:w-fit  text-xs 2xl:text-sm  px-3.5 py-3 font-semibold rounded-full inline-flex items-center gap-1.5">
-            More
-            <IoChevronDownOutline className="w-3 h-3" />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className=" border-none bg-[#081C15] dark:bg-[#0E293B]   mt-3.5 mr-20  p-1.5 rounded-xl shadow-sm">
-            {dropdownItems.map((item, index) => (
-              <DropdownMenuItem key={index}>
-                <Link
-                  href={item.href}
-                  className={`capitalize  rounded-full  px-5 pr-20 w-full  text-[0.65rem] lg:text-xs 2xl:text-sm
-                 tracking-wide 
-                 ${
-                   pathname === item.href
-                     ? " bg-[#70E000] dark:bg-[#70E00086] py-2 2xl:py-3  font-semibold"
-                     : " text-slate-300 font-thin py-1 2xl:py-2"
-                 } `}
-                >
-                  {item.name}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>{" "}
-      </div>
-      <div className="flex items-center gap-1">
-        <ToggleTheme />
-
-        <button className=" lg:block hidden bg-slate-800 dark:bg-[#374153] hover:bg-[#374153]/70 rounded-full p-2.5 2xl:p-3.5">
-          <RiSearchLine className=" text-slate-300 text-lg" />
-        </button>
-        <Link
-          href={"/settings"}
-          className={`hidden lg:flex 
-            bg-slate-800 dark:bg-[#374153]
-           hover:bg-[#374153]/70 rounded-full p-2.5 2xl:p-3.5
-           `}
+        ))} */}
+        {/* <Link
+          className={`text-sm 2xl:text-base font-semibold hover:border-b-2 border-primary-50 hover:-translate-y-1 transition-all   pb-1.5 mt-1.5`}
+          href={
+            session.status === "authenticated"
+              ? "/dashboard/add-property"
+              : "/start-hosting"
+          }
         >
-          <IoSettingsOutline
-            className={` text-slate-300 text-lg
-           ${pathname === "/settings" ? "text-[#70E000]" : ""}
+          Start Hosting
+        </Link> */}
+        {/* <button className="text-sm 2xl:text-base font-semibold">
+          Sign Out
+        </button> */}
+        {session.status === "authenticated" ? (
+          <>
+            <button
+              onClick={signOutUser}
+              className={`border bg-gradient-to-b hover:-translate-y-1 transition-all from-[#FF9900] to-[#FFE7A9] text-black font-bold rounded-full px-3 py-2 inline-flex items-center gap-2
 
-            `}
-          />
-        </Link>
-        <button className=" hidden bg-slate-800 dark:bg-[#374153] hover:bg-[#374153]/70 rounded-full p-1.5 2xl:px-2 py-1 gap-1 lg:flex items-center">
-          <Image
-            src="/avatar.png"
-            alt="Avatar"
-            width={30}
-            height={30}
-            className="rounded-full"
-          />
-          <div className="flex flex-col items-start pr-0.5">
-            <span className="text-white text-[0.65rem] 2xl:text-sm text-nowrap">
-              Goerg Bush
-            </span>
-            <span className="text-slate-300 text-[0.6rem] 2xl:text-xs">
-              Admin
-            </span>
-          </div>
-        </button>
-        <Sheet>
-          <SheetTrigger className="border block lg:hidden border-[#374153]  rounded-full p-2.5 2xl:p-3.5">
-            <RxHamburgerMenu className=" text-slate-300 text-lg" />
-          </SheetTrigger>
-          <SheetContent>
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              width={130}
-              height={130}
-              className=" w-28 2xl:w-36 mb-2  "
-            />
-            <div className="w-full pb-4 border-b mb-4 "></div>
-            <div className="flex items-start mx-auto flex-col ">
-              {navlinks.map((link, index) => (
-                <Link
-                  href={link.href}
-                  key={index}
-                  className={`  capitalize py-3.5 text-start rounded-full text-[0.65rem] lg:text-xs 2xl:text-sm  font-thin tracking-wide
-            ${
-              pathname === link.href
-                ? " bg-[#70E000] dark:bg-[#70E00086] px-3.5  text-white"
-                : " text-slate-300 px-1.5 2xl:px-2 "
-            }  `}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+        `}
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              href={"/login"}
+              className={`border bg-gradient-to-b hover:-translate-y-1 transition-all from-[#FF9900] to-[#FFE7A9] text-black font-bold rounded-full px-3 py-2 inline-flex items-center gap-2       `}
+            >
+              Login
+            </Link>{" "}
+          </>
+        )}
       </div>
+      <Sheet>
+        <SheetTrigger className=" block md:hidden">
+          <RxHamburgerMenu className="w-7 h-7" />
+        </SheetTrigger>
+        <SheetContent className=" dark:bg-primary p-4 border-none">
+          <Image src={"/images/logo.svg"} width={137} height={137} alt="logo" />
+          <div className="flex flex-col-reverse items-center -mt-16 justify-center h-full gap-2">
+            {session.status === "authenticated" ? (
+              <div className=" mt-5 flex flex-col-reverse items-center gap-4">
+                <button
+                  className={`text-sm bg-primary-50 w-full text-clip px-6 py-2 rounded-lg 2xl:text-base font-semibold mt-2 mb-5 
+
+        `}
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <Link
+                href={"/login"}
+                className={`border bg-gradient-to-b hover:-translate-y-1 transition-all from-[#FF9900] to-[#FFE7A9] text-black font-bold rounded-full px-3 py-2 inline-flex items-center gap-2       `}
+              >
+                Login
+              </Link>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
     </nav>
   );
 };

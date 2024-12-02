@@ -29,7 +29,7 @@ export default function ThemeSwitch() {
   if (resolvedTheme === "dark") {
     return (
       <button
-        onClick={() => setTheme("light")}
+        onClick={() => setTheme("dark")}
         className=" border border-slate-600 hover:border-[#374153]/60 rounded-full p-2.5 2xl:p-3.5"
       >
         <HiSun className=" text-slate-300 text-xl" />

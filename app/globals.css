@@ -77,7 +77,7 @@
 }
 
 body {
-  font-family: var(--font-urbanist);
+  font-family: var(--font-lexend);
 }
 *::-webkit-scrollbar {
   width: 9px;
@@ -105,6 +105,12 @@ body {
 
 .inner-left-shadow {
   box-shadow: inset 60px 0 30px -10px rgba(63, 216, 12, 0.183);
+}
+
+.oyo {
+  background-image:
+    radial-gradient( at 50% 16%, rgba(255, 153, 0, 0.1) 0, transparent 17%),
+    radial-gradient(at 100% 45%, rgba(255, 153, 0, 0.3) 0, transparent 0%);
 }
 
 .dark{

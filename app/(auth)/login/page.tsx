@@ -1,214 +1,183 @@
 "use client";
-import React from "react";
-import Image from "next/image";
-import { useState, useRef } from "react";
 
+import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
-import toast from "react-hot-toast";
-
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@radix-ui/react-checkbox";
+import { IoCloseSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+import { MoonLoader } from "react-spinners";
+import { getCaptchaToken } from "@/lib/captcha";
+import { verifyCaptcha } from "@/lib/database/actions/user.action";
 
 const formSchema = z.object({
-  email: z.string().email({
-    message: "Please enter a valid email address",
-  }),
-  password: z.string().min(6, {
-    message: "Password should be atleast 6 characters",
-  }),
+  email: z.string().min(2, { message: "Email is required" }),
+  password: z.string().min(2, { message: "Password is required" }),
 });
 
-const page = () => {
+const AddClient = () => {
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "test@gmail.com",
-      password: "password",
+      email: "",
+      password: "",
     },
   });
 
-  const [toggle, setToggle] = useState(false);
-
+  const router = useRouter();
   async function onSubmit(values: any) {
-    console.log(values);
-    setToggle(!toggle);
+    setLoading(true);
+
+    // const token = await getCaptchaToken();
+
+    // const captchaResponse = await verifyCaptcha(token);
+
+    // if (!captchaResponse.success) {
+    //   toast.error(captchaResponse.message);
+    //   setLoading(false);
+    //   return;
+    // }
+
+    const { email, password } = values;
+    const res = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+    console.log(res);
+    if (!res!.ok) {
+      toast.error(res!.error);
+      setLoading(false);
+      return;
+    }
+    toast.success("Logged in successfully");
+    router.push("/");
+    setLoading(false);
   }
 
   return (
-    <div className=" w-full flex  md:items-start justify-center gap-16 pb-4">
-      <div className="hidden lg:block ">
-        <Image
-          src="/loginHero.png"
-          alt="login"
-          width={400}
-          height={400}
-          priority
-          className=" w-[440px]  2xl:w-[580px] -mt-16 2xl:-mt-24 "
-        />
-      </div>
-      <div className=" bg-[#181926] h-fit shadow-inner shadow-gray-800 w-full sm:w-fit sm:min-w-[459px] 2xl:mt-6 2xl:min-w-[500px] mt-24 md:mt-0 flex flex-col items-start rounded-lg p-7 px-[2.18rem]    2xl:p-10 ">
-        <h2 className=" text-xl md:text-2xl 2xl:text-3xl font-bold text-white mb-1 2xl:mb-2">
-          WELCOME BACK!
+    <Form {...form}>
+      <div
+        id="first"
+        className="flex flex-col bg-[#161313CC]  items-center justify-center w-fit mx-auto gap-5 md:gap-3 p-5  2xl:pt-16 rounded-xl "
+      >
+        <h2 className="text-3xl md:text-4xl 2xl:text-5xl font-semibold 2xl:mb-2 px-12">
+          Login to continue
         </h2>
-
-        <Form {...form}>
-          <div
-            id="first"
-            className="flex flex-col  items-center justify-center w-full gap-6 md:gap-4  mt-6"
-          >
-            <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full ">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem className="mb-4 w-full">
-                    <FormLabel className="block 2xl:text-[1.05rem] text-gray-300  mb-2.5">
-                      Email
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder=" enter your email"
-                        {...field}
-                        className="  focus:ring-green-600/50 border-none focus:ring-1 outline-offset-1 
-                         shadow  focus:border mr-0 md:mr-6  rounded-lg bg-[#333547]/60  p-4 
-                          2xl:py-6 2xl:px-6 text-[#848BAC] leading-tight 
-                          
-
-
-                          flex h-10 w-full  focus:border-[#52FC18]    px-3 py-2 text-sm
-                           ring-offset-green-500 file:border-0 file:bg-transparent file:text-sm file:font-medium
-                            placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-4
-                             focus-visible:ring-[#52FC18]/20 focus-visible:ring-offset-1 disabled:cursor-not-allowed
-                              disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950
-                               dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300
-
-                          "
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem className="mb-4 w-full">
-                    <FormLabel className="block 2xl:text-[1.05rem] text-gray-300  mb-2.5">
-                      Password
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder=" enter your password"
-                        {...field}
-                        className="  focus:ring-green-600/50 border-none focus:ring-1 outline-offset-1 
-                         shadow  focus:border mr-0 md:mr-6  rounded-lg bg-[#333547]/60  p-4 
-                          2xl:py-6 2xl:px-6 text-[#848BAC] leading-tight 
-                          
-
-
-                          flex h-10 w-full  focus:border-[#52FC18]    px-3 py-2 text-sm
-                           ring-offset-green-500 file:border-0 file:bg-transparent file:text-sm file:font-medium
-                            placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-4
-                             focus-visible:ring-[#52FC18]/20 focus-visible:ring-offset-1 disabled:cursor-not-allowed
-                              disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:ring-offset-slate-950
-                               dark:placeholder:text-slate-400 dark:focus-visible:ring-slate-300
-
-                          "
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {!toggle ? (
-                <Link
-                  href={"/login/reset-password"}
-                  className="text-xs 2xl:text-sm text-gray-300 font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Forgot password?{"  "}
-                  <span className="text-emerald-400">Reset it</span>.
-                </Link>
-              ) : (
-                <p className="text-xs inline-flex w-full bg-[#F74418]/15 rounded-xl gap-3 border border-[#F74418]/20 py-2 px-3 items-center 2xl:text-sm text-[#F74418] font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                  <Image
-                    src="/alert.svg"
-                    alt="line"
-                    width={20}
-                    height={20}
-                    className=""
-                  />
-                  <span className=" text-[#F74418]">
-                    Incorrrect password. Please try again.
-                  </span>
-                </p>
-              )}
-
-              <div className="flex flex-col w-full mt-2 items-center justify-center">
-                <Button
-                  type="submit"
-                  className="bg-[#333547] mb-4 inner-shadow border border-[#28B601] w-full rounded-xl hover:bg-slate-600 mt-4 text-white font-semibold py-6 px-10 2xl:text-lg   focus:outline-none focus:shadow-outline"
-                >
-                  {/* {isLoading ? (
-                    <ColorRing
-                      visible={true}
-                      height="35"
-                      width="35"
-                      ariaLabel="color-ring-loading"
-                      wrapperStyle={{}}
-                      wrapperClass="color-ring-wrapper"
-                      colors={[
-                        "#ffffff",
-                        "#ffffff",
-                        "#ffffff",
-                        "#ffffff",
-                        "#ffffff",
-                      ]}
+        <p className="font-semibold mb-2 ">Welcome back admin!</p>
+        <form onSubmit={form.handleSubmit(onSubmit)} className=" w-full px-4 ">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="mb-4 w-full">
+                <FormControl className="">
+                  <div className="flex items-center px-3 p-1 rounded-lg gap-2.5 bg-[#2A2A2A]">
+                    <Image
+                      src="/images/email.svg"
+                      width={25}
+                      height={25}
+                      alt="email"
                     />
-                  ) : ( */}
-                  <span className=" capitalize">LOG IN</span>
-                  {/* )} */}
-                </Button>
-                <Image
-                  src="/divider.png"
-                  alt="line"
-                  width={400}
-                  height={400}
-                  className=" my-2"
-                />
-                <Link
-                  href={"/signup"}
-                  className="bg-[#333547]  border border-[#21222e] w-full rounded-xl hover:bg-slate-600 mt-4 text-white font-semibold py-3 text-center px-10 2xl:text-lg   focus:outline-none focus:shadow-outline"
-                >
-                  <span className=" capitalize">SIGN UP</span>
-                </Link>
-              </div>
-            </form>
+                    <Input
+                      placeholder="Email* "
+                      {...field}
+                      className="   border-none bg-transparent focus:ring-1 outline-offset-1 
+                         shadow  focus:border mr-0 md:mr-6  rounded-lg   p-3
+                          2xl:py-6 2xl:px-6 text-[#848BAC] leading-tight 
+
+                          "
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="mb-4 w-full">
+                <FormControl className="">
+                  <div className="flex items-center px-3 p-1 rounded-lg gap-2.5 bg-[#2A2A2A]">
+                    <Image
+                      src="/images/password.svg"
+                      width={25}
+                      height={25}
+                      alt="email"
+                    />
+                    <Input
+                      placeholder="Password* "
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                      className="   border-none bg-transparent focus:ring-1  outline-offset-1 
+                         shadow  focus:border mr-0 md:mr-6  rounded-lg   p-3 
+                          2xl:py-6 2xl:px-6 text-[#848BAC] leading-tight 
+
+                          "
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      <Image
+                        src="/images/eye.svg"
+                        width={40}
+                        className=" border-l pl-2 border-primary-50/50"
+                        height={40}
+                        alt="email"
+                      />
+                    </button>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-end pt-4 items-center w-full">
+            <button
+              type="button"
+              onClick={() => {
+                router.push("/reset-password");
+              }}
+              className="text-xs 2xl:text-sm font-semibold"
+            >
+              Forgot Password?
+            </button>
           </div>
-        </Form>
+
+          <div className="flex flex-col w-full mt-2 items-center justify-center">
+            <Button
+              type="submit"
+              className="bg-gradient-to-t from-[#FF9900] to-[#FFE7A9] mb-4   w-full rounded-xl  mt-2 text-black font-bold py-6 px-10 2xl:text-lg flex items-center justify-center   focus:outline-none focus:shadow-outline"
+            >
+              {loading ? (
+                <MoonLoader size={25} />
+              ) : (
+                <span className=" capitalize">Log In</span>
+              )}
+            </Button>
+          </div>
+        </form>
       </div>
-    </div>
+    </Form>
   );
 };
 
-export default page;
+export default AddClient;

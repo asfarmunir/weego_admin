@@ -61,14 +61,14 @@ const AddClient = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger
-        className="bg-[#70E000] dark:bg-[#70E00079] p-3 hidden md:block rounded-full 
+        className="bg-[#ff99003a] text-primary-50 border border-primary-50  p-3 hidden md:block rounded-full 
       text-xs font-semibold  "
       >
-        Create Contract
+        Add Contract
       </AlertDialogTrigger>
-      <AlertDialogContent className=" p-0  2xl:min-w-[600px]  ">
+      <AlertDialogContent className=" p-0  2xl:min-w-[600px] border border-primary-50  ">
         <AlertDialogHeader>
-          <div className="  flex items-center justify-between px-5 pt-5">
+          <div className="border-b border-primary-50 pb-5  flex items-center justify-between px-5 pt-5">
             <div className="flex flex-col  items-start">
               <p className=" md:text-lg 2xl:text-2xl font-semibold">
                 Create Contract
@@ -91,13 +91,13 @@ const AddClient = () => {
               control={form.control}
               name="account"
               render={({ field }) => (
-                <FormItem className="mb-4 w-full border-b pb-4">
+                <FormItem className="mb-4 w-full  pb-4">
                   <FormLabel className="block  text-slate-700 pl-1 font-bold  mb-2">
                     Account
                   </FormLabel>
                   <FormControl>
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className=" appearance-none border rounded-full border-[#CED2D6] dark:border-slate-700   bg-[#FBFBFB] dark:bg-slate-800  placeholder:text-slate-500 dark:text-slate-300   w-full py-6 px-3.5 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
+                      <SelectTrigger className=" appearance-none border rounded-2xl border-slate-800  bg-primary-100  placeholder:text-slate-500 dark:text-slate-300   w-full py-6 px-3.5 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
                         <SelectValue placeholder={" select account"} />
                       </SelectTrigger>
                       <SelectContent>
@@ -112,7 +112,7 @@ const AddClient = () => {
               )}
             />
 
-            <div className=" appearance-none border  flex items-center justify-between rounded-full border-[#CED2D6] dark:border-slate-700   bg-[#FBFBFB] dark:bg-slate-800  placeholder:text-slate-500 dark:text-slate-300   w-full py-4 px-3.5 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
+            <div className=" appearance-none border  flex items-center justify-between rounded-2xl border-slate-800  bg-primary-100  placeholder:text-slate-500 dark:text-slate-300   w-full py-4 px-3.5 text-gray-800 leading-tight focus:outline-none focus:shadow-outline">
               <p className=" text-sm font-semibold">
                 Create Silently (not E-mail)
               </p>
@@ -120,13 +120,13 @@ const AddClient = () => {
             </div>
 
             <div className="flex w-full my-4 gap-2 items-center justify-between">
-              <AlertDialogCancel className="   px-8 border w-full border-slate-300 dark:border-slate-700 py-8  rounded-full">
+              <AlertDialogCancel className="   px-8 border w-full border-slate-300 dark:border-slate-700 py-6  rounded-full">
                 Cancel
               </AlertDialogCancel>
 
               <Button
                 type="submit"
-                className=" rounded-full   bg-[#70E000] w-full font-semibold py-8 px-6   focus:outline-none focus:shadow-outline"
+                className=" rounded-full   bg-gradient-to-b from-[#FF9900] to-[#FFE7A9] w-full font-semibold py-6 px-6   focus:outline-none focus:shadow-outline"
               >
                 {/* {loading ? (
                       <ColorRing

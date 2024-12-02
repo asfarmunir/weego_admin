@@ -1,28 +1,21 @@
 export const navlinks = [
     {
-        name: "dashboard",
+        name: "Near Me",
+        href: "#",
+    },
+    {
+        name: "Trips",
+        href: "#",
+    },
+    {
+        name: "Saved",
+        href: "#",
+    },
+    {
+        name: "Start hosting",
         href: "/",
     },
-    {
-        name: "accounts",
-        href: "/prop-accounts",
-    },
-     {
-    name: "Rides",
-    href: "/orders",
-  },
-    {
-        name: "account analytics",
-        href: "/account-analytics",
-    },
-    {
-        name: "payouts",
-        href: "/payouts",
-    },
-    {
-        name: "notifications",
-        href: "/notifications",
-    },
+
    
    
 ]

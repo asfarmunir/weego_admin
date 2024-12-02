@@ -83,7 +83,7 @@ const AddClient = () => {
     <AlertDialog>
       <AlertDialogTrigger
         className="flex items-center justify-between py-3 px-4
-       flex-grow rounded-full font-semibold bg-[#48CAE4]/20 dark:bg-blue-500/50 "
+       flex-grow rounded-xl font-semibold bg-[#372F2FCC]/30 border border-[#372F2FCC] "
       >
         Add Widget
         <Image
