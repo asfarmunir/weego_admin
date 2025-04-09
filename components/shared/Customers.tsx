@@ -17,7 +17,7 @@ import Link from "next/link";
 import CustomersFilter from "./CustomersFilter";
 import DeleteCustomer from "./DeleteCustomer";
 
-const page = ({
+const Page = ({
   users,
   page,
   totalUsers,
@@ -57,13 +57,13 @@ const page = ({
                   Verified Status
                 </TableHead>
                 <TableHead className="text-sm text-center  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
-                  Location
+                  Is Driver
                 </TableHead>
                 <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Referred Users
                 </TableHead>
                 <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
-                  Rides Completed
+                  Profile Picture
                 </TableHead>
                 <TableHead className="text-sm  bg-[#F4FAFF] dark:bg-[#372F2F99] capitalize">
                   Ratings
@@ -101,24 +101,16 @@ const page = ({
                     </TableCell>
 
                     <TableCell className=" text-xs text-center  text-white capitalize bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
-                      {user.city && user.country
-                        ? `${user.city}, ${user.country}`
-                        : "Not Provided"}
+                      {user.isDriver ? "Yes" : "No"}
                     </TableCell>
                     <TableCell className=" text-xs text-center   text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
                       {user.referedUsers ? user.referedUsers.length : 0}
                     </TableCell>
                     <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
-                      $
-                      {user.withdrawableAmount
-                        ? user.withdrawableAmount / 100
-                        : "0"}
+                      {user.profilePicture ? "Yes" : "No"}
                     </TableCell>
                     <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
-                      $
-                      {user.referalWithdrawableAmount
-                        ? user.referalWithdrawableAmount / 100
-                        : "0"}
+                      N/A
                     </TableCell>
                     <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
                       <div className="flex items-center gap-2">
@@ -154,4 +146,4 @@ const page = ({
   );
 };
 
-export default page;
+export default Page;

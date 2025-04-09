@@ -139,7 +139,7 @@ const page = async ({
               )}
             </h3>
             <p className="text-xs 2xl:text-sm text-green-500 font-semibold">
-              +18% increase
+              +0% increase
             </p>
             <Image
               src="/images/graph.svg"

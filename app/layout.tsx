@@ -21,9 +21,8 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "Hunt Grounds Admins",
-  description:
-    "Hunt Grounds is a platform that allows you to find the best hunting grounds in your area.",
+  title: "WeeGo Admins",
+  description: "WeeGo Admins - The Ultimate Solution for Your Business",
 };
 
 export default function RootLayout({
