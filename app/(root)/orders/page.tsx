@@ -293,7 +293,7 @@ const Page = () => {
                     </p>
                     <p>
                       <span className="font-medium">Distance:</span>{" "}
-                      {formatDistance(selectedRide.distance)}
+                      {selectedRide.distance} kms
                     </p>
                     <p>
                       <span className="font-medium">Fare:</span> $
@@ -313,19 +313,7 @@ const Page = () => {
                       <span className="font-medium">Status:</span>{" "}
                       {getPaymentStatusBadge(selectedRide.paymentStatus)}
                     </p>
-                    {selectedRide.paymentMethod === "p2p" &&
-                      selectedRide.paymentProof && (
-                        <div>
-                          <p className="font-medium">Payment Proof:</p>
-                          <Image
-                            src={selectedRide.paymentProof}
-                            alt="Payment proof"
-                            width={300}
-                            height={150}
-                            className="rounded-md border mt-2"
-                          />
-                        </div>
-                      )}
+
                     {selectedRide.transactionId && (
                       <p>
                         <span className="font-medium">Transaction ID:</span>{" "}

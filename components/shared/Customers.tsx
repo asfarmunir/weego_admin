@@ -75,56 +75,66 @@ const Page = ({
             </TableHeader>
             <TableBody className="   ">
               {users &&
-                users.map((user, i) => (
-                  <TableRow key={i} className=" border-y-4 border-[#000214]  ">
-                    <TableCell className=" text-xs  text-white border-y-4 border-[#000214] rounded-tl-full rounded-bl-full bg-[#372f2fd4]   2xl:text-sm font-semibold">
-                      {user._id ? String(user._id).slice(0, 6) + "..." : "N/A"}
-                    </TableCell>
+                users.map((user, i) => {
+                  console.log(user, "user");
+                  return (
+                    <TableRow
+                      key={i}
+                      className=" border-y-4 border-[#000214]  "
+                    >
+                      <TableCell className=" text-xs  text-white border-y-4 border-[#000214] rounded-tl-full rounded-bl-full bg-[#372f2fd4]   2xl:text-sm font-semibold">
+                        {user._id
+                          ? String(user._id).slice(0, 6) + "..."
+                          : "N/A"}
+                      </TableCell>
 
-                    <TableCell className="bg-[#372f2fd4] capitalize border-y-4 border-[#000214]    ">
-                      {user.firstname && user.lastname
-                        ? user.firstname + " " + user.lastname
-                        : "N/A"}
-                    </TableCell>
-                    <TableCell className=" bg-[#372f2fd4]  border-y-4 border-[#000214]  ">
-                      {user.email || "N/A"}
-                    </TableCell>
+                      <TableCell className="bg-[#372f2fd4] capitalize border-y-4 border-[#000214]    ">
+                        {user.firstname && user.lastname
+                          ? user.firstname + " " + user.lastname
+                          : "N/A"}
+                      </TableCell>
+                      <TableCell className=" bg-[#372f2fd4]  border-y-4 border-[#000214]  ">
+                        {user.email || "N/A"}
+                      </TableCell>
 
-                    <TableCell className=" text-xs  text-white capitalize bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
-                      <p
-                        className={`${
-                          user.isVerified ? "bg-emerald-600" : "bg-yellow-500"
-                        } text-white  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold`}
-                      >
-                        {user.isVerified ? "Verified" : "Pending"}
-                      </p>
-                    </TableCell>
-
-                    <TableCell className=" text-xs text-center  text-white capitalize bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
-                      {user.isDriver ? "Yes" : "No"}
-                    </TableCell>
-                    <TableCell className=" text-xs text-center   text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      {user.referedUsers ? user.referedUsers.length : 0}
-                    </TableCell>
-                    <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
-                      {user.profilePicture ? "Yes" : "No"}
-                    </TableCell>
-                    <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
-                      N/A
-                    </TableCell>
-                    <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
-                      <div className="flex items-center gap-2">
-                        <Link
-                          href={`/customerDetails/${user._id}`}
-                          className="bg-primary-50 text-black  flex items-center  justify-center w-8 h-8 rounded-full text-xs 2xl:text-sm font-semibold"
+                      <TableCell className=" text-xs  text-white capitalize bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
+                        <p
+                          className={`${
+                            user.isEmailVerified
+                              ? "bg-emerald-600"
+                              : "bg-yellow-500"
+                          } text-white  flex items-center w-fit justify-center px-3 py-2 rounded-full text-xs 2xl:text-sm font-semibold`}
                         >
-                          <FaEye className="w-4 h-4" />
-                        </Link>
-                        <DeleteCustomer id={user._id!.toString()} />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                          {user.isEmailVerified ? "Verified" : "Not Verified"}
+                        </p>
+                      </TableCell>
+
+                      <TableCell className=" text-xs text-center  text-white capitalize bg-[#372f2fd4]  border-y-4 border-[#000214]   2xl:text-sm font-semibold">
+                        {user.isDriver ? "Yes" : "No"}
+                      </TableCell>
+                      <TableCell className=" text-xs text-center   text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                        {user.referedUsers ? user.referedUsers.length : 0}
+                      </TableCell>
+                      <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
+                        {user.profilePicture ? "Yes" : "No"}
+                      </TableCell>
+                      <TableCell className="bg-[#372f2fd4] text-center border-y-4 border-[#000214]  ">
+                        N/A
+                      </TableCell>
+                      <TableCell className=" text-xs text-center  rounded-tr-full rounded-br-full  text-white bg-[#372f2fd4]  border-y-4 border-[#000214] 2xl:text-sm font-semibold">
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/customerDetails/${user._id}`}
+                            className="bg-primary-50 text-black  flex items-center  justify-center w-8 h-8 rounded-full text-xs 2xl:text-sm font-semibold"
+                          >
+                            <FaEye className="w-4 h-4" />
+                          </Link>
+                          <DeleteCustomer id={user._id!.toString()} />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               {!users?.length && (
                 <TableRow>
                   <TableCell colSpan={9} className="text-center">
