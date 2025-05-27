@@ -104,6 +104,37 @@ const driverProfileSchema = new Schema({
     }
 });
 
+const kycSchema = new Schema({
+    // KYC Documents
+    documents: {
+      cnicFront: {
+        type: String,
+        required: [true, 'CNIC front image is required']
+      },
+      cnicBack: {
+        type: String,
+        required: [true, 'CNIC back image is required']
+      }
+    },
+    
+    verificationStatus: {
+      type: String,
+      enum: ['pending', 'verified', 'rejected'],
+      default: 'pending'
+    },
+    rejectionReason: {
+      type: String
+    },
+    verifiedAt: {
+      type: Date
+    },
+    submittedAt: {
+      type: Date,
+      default: Date.now
+    }
+  });
+  
+
 const userSchema = new Schema(
     {
         firstname: {
@@ -129,7 +160,9 @@ const userSchema = new Schema(
         type: String,
         default: null,
         },
-
+        gender: {
+            type: String,
+        },
         currentProfileStatus: {
             type: String,
             enum: ['driver', 'passenger'],
@@ -160,6 +193,9 @@ const userSchema = new Schema(
             type: Date,
             default: Date.now, // Timestamp for when the location was last updated
         },
+        kyc: {
+            type: kycSchema
+          },
     },
     {
         timestamps: true,
